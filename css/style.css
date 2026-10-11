@@ -11,6 +11,7 @@
   --danger: #ef4444;
   --radius: 14px;
 }
+:root { color-scheme: dark; }
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; }
 body {
@@ -28,7 +29,7 @@ b { font-variant-numeric: tabular-nums; }
 .topbar {
   display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center;
   padding: 12px 16px; border-bottom: 1px solid var(--line); background: var(--panel);
-  position: sticky; top: 0; z-index: 5;
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
 }
 .brand { display: flex; align-items: center; gap: 10px; }
 .brand-dot {
