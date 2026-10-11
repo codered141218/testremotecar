@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f1216" />
+  <title>RC Car Remote</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-dot" id="statusDot" aria-hidden="true"></span>
+      <h1>RC Car Remote</h1>
+    </div>
+    <div class="conn" id="connPanel">
+      <label class="field">
+        <span>Link</span>
+        <select id="transportSelect">
+          <option value="sim">Simulation (no hardware)</option>
+          <option value="ws">Wi‑Fi · WebSocket</option>
+          <option value="ble">Bluetooth · Web Bluetooth</option>
+          <option value="serial">USB · Web Serial</option>
+        </select>
+      </label>
+      <label class="field" data-for="ws">
+        <span>WebSocket URL</span>
+        <input id="wsUrl" type="text" value="ws://192.168.4.1:81" spellcheck="false" />
+      </label>
+      <label class="field" data-for="ble">
+        <span>BLE service UUID</span>
+        <input id="bleService" type="text" value="6e400001-b5a3-f393-e0a9-e50e24dcca9e" spellcheck="false" />
+      </label>
+      <label class="field" data-for="serial">
+        <span>Baud</span>
+        <input id="serialBaud" type="number" value="115200" min="300" step="100" />
+      </label>
+      <button id="connectBtn" class="btn primary">Connect</button>
+      <span class="status" id="statusText">Disconnected</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- Left: controls -->
+    <section class="card controls" aria-label="Controls">
+      <div class="card-head">
+        <h2>Controls</h2>
+        <span class="hint">Keyboard: W A S D / arrows · Space = stop · H = horn · L = lights</span>
+      </div>
+
+      <div class="controls-grid">
+        <div class="dpad" id="dpad" role="group" aria-label="Direction pad">
+          <button class="pad up"    data-dir="up"    aria-label="Forward">▲</button>
+          <button class="pad left"  data-dir="left"  aria-label="Left">◀</button>
+          <button class="pad stop"  data-dir="stop"  aria-label="Stop">■</button>
+          <button class="pad right" data-dir="right" aria-label="Right">▶</button>
+          <button class="pad down"  data-dir="down"  aria-label="Reverse">▼</button>
+        </div>
+
+        <div class="joystick-wrap">
+          <div class="joystick" id="joystick" aria-label="Virtual joystick">
+            <div class="joy-ring"></div>
+            <div class="joy-knob" id="joyKnob"></div>
+          </div>
+          <div class="joy-readout">
+            <span>throttle <b id="joyY">0</b></span>
+            <span>steer <b id="joyX">0</b></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="slider">
+          <span>Speed limit <b id="speedVal">60</b>%</span>
+          <input id="speed" type="range" min="10" max="100" value="60" />
+        </label>
+      </div>
+
+      <div class="row actions">
+        <button id="hornBtn" class="btn">📣 Horn</button>
+        <button id="lightsBtn" class="btn toggle" aria-pressed="false">💡 Lights</button>
+        <button id="estopBtn" class="btn danger">⛔ E‑STOP</button>
+      </div>
+    </section>
+
+    <!-- Right: movement tracker -->
+    <aside class="card tracker" aria-label="Movement tracker">
+      <div class="card-head">
+        <h2>Movement tracker</h2>
+        <span class="hint" id="trackSource">Estimated from commands</span>
+      </div>
+      <canvas id="trackCanvas" width="360" height="360"></canvas>
+      <dl class="stats">
+        <div><dt>Heading</dt><dd><span id="stHeading">0</span>°</dd></div>
+        <div><dt>Speed</dt><dd><span id="stSpeed">0.00</span> m/s</dd></div>
+        <div><dt>Distance</dt><dd><span id="stDist">0.0</span> m</dd></div>
+        <div><dt>Position</dt><dd><span id="stPos">0.0, 0.0</span></dd></div>
+        <div><dt>Battery</dt><dd><span id="stBatt">—</span></dd></div>
+        <div><dt>Latency</dt><dd><span id="stLat">—</span></dd></div>
+      </dl>
+      <div class="row">
+        <button id="resetTrackBtn" class="btn small">Reset track</button>
+        <button id="followBtn" class="btn small toggle" aria-pressed="true">Follow car</button>
+      </div>
+    </aside>
+
+    <!-- Bottom: log -->
+    <section class="card log" aria-label="Link log">
+      <div class="card-head">
+        <h2>Link log</h2>
+        <button id="clearLogBtn" class="btn small">Clear</button>
+      </div>
+      <pre id="log" aria-live="polite"></pre>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
