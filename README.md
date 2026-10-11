@@ -1,5 +1,16 @@
 # RC Car Remote
 
+> **Project status: FAILED (2026-10-11)**
+>
+> The target vehicle is an MN Model MN82 Land Cruiser 1:12, which is controlled only by its
+> proprietary 2.4 GHz pistol-grip transmitter. It has no Bluetooth, Wi-Fi, or app interface, so
+> no browser or desktop software can reach it without adding a bridge board (for example an ESP32
+> in the transmitter or in the car), and the project constraint was zero hardware spend.
+>
+> The software side is complete and works in Simulation mode (controls, movement tracker,
+> WebSocket / Bluetooth / Serial links, reference ESP32 firmware, mock car server). It can be
+> picked up again if a bridge board becomes available.
+
 A browser-based remote control for a toy RC car, with a mini movement tracker panel.
 Plain HTML/CSS/JS, no build step, works on desktop and phone.
 
